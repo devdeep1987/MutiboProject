@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mutibo Client</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
+    <string name="submit">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="verify">Verify Password:</string>
+    <string name="register">Register</string>
+
+</resources>

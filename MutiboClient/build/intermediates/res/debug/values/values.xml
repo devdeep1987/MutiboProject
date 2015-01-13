@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Users/Devdeep/AndroidStudioProjects/MutiboClient/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">Mutibo Client</string>
+    <!-- From: file:/C:/Users/Devdeep/AndroidStudioProjects/MutiboClient/res/values/urls.xml -->
+    <eat-comment/>
+    <string name="base_uri">http://10.0.2.2:8080/spring-android-basic-auth-server</string>
+    <!-- From: file:/C:/Users/Devdeep/AndroidStudioProjects/MutiboClient/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="password">Password:</string>
+    <string name="register">Register</string>
+    <string name="signup">Sign Up</string>
+    <string name="submit">Login</string>
+    <string name="username">Username:</string>
+    <string name="verify">Verify Password:</string>
+</resources>
