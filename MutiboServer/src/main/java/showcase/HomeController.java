@@ -42,6 +42,9 @@ public class HomeController {
     @Autowired
     CustomUserDetailsService users;
 
+    @Autowired
+    private MovieSetRepository setRepository;
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -77,9 +80,12 @@ public class HomeController {
     }
 
     @RequestMapping(value = "play", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody Message play(HttpSession session) {
+    public @ResponseBody MovieSet play(HttpSession session) {
         logger.info("Accessing protected play resource sid:"+session.getId());
-        return new Message(100, "Congratulations!", "Launching play.");
+        //return new Message(100, "Congratulations!", "Launching play.");
+        MovieSet set = setRepository.findById((long) 1);
+        logger.info("Set:"+set.getMovie1());
+        return set;
     }
 
 

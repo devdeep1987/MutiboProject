@@ -1,6 +1,7 @@
 package org.springframework.android.basicauth;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +24,10 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collections;
 
 /**
@@ -33,6 +37,8 @@ public class PlayActivity extends Activity {
 
     private boolean destroyed = false;
     protected static final String TAG = PlayActivity.class.getSimpleName();
+    private MovieSet movieSet;
+    private ArrayList<String> movieArray;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,6 +90,23 @@ public class PlayActivity extends Activity {
                 HttpGet request = new HttpGet(url);
 
                 HttpResponse response = httpclient.execute(request, MainActivity.staticHttpContext);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+                int count = 0;
+                String set[] = new String[5];
+                movieArray = new ArrayList<String>();
+                for (String line = null; (line = reader.readLine()) != null;) {
+                    Log.d(TAG,"Line:"+line+" length:"+line.length());
+                    if (line.length() > 1) {
+                        int beginoffset = 3, endoffset = 2;
+                        if (count == 4)
+                            endoffset = 1;
+                        set[count] = line.substring(line.indexOf(':')+beginoffset,line.length()-endoffset);
+                        movieArray.add(set[count]);
+                        Log.d(TAG,"Movie:"+set[count]);
+                        count++;
+                    }
+                }
+                movieSet = new MovieSet(set[0], set[1], set[2], set[3], set[4]);
 
                 //return response.getBody();
                 return new Message(0,"Play",response.getStatusLine().toString());
@@ -103,6 +126,12 @@ public class PlayActivity extends Activity {
         @Override
         protected void onPostExecute(Message result) {
             displayResponse(result);
+
+                Intent game = new Intent(PlayActivity.this, GameActivity.class);
+                game.putExtra("MovieSet",movieArray);
+
+                startActivity(game);
+
 
         }
     }
