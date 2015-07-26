@@ -43,10 +43,9 @@ import javax.servlet.http.HttpSession;
  * 
  * @author Roy Clarkson
  */
-//@Controller
+
 @RestController
-//@EnableGlobalMethodSecurity(securedEnabled = true)
-//@RequestMapping("/*")
+
 public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -75,8 +74,7 @@ public class HomeController {
     public @ResponseBody Message login(HttpSession session) {
         logger.info("Accessing protected resource sid:"+session.getId());
         ArrayList<Long> questionArray = new ArrayList<Long>();
-        //for (long i=1;i<=setRepository.count();i++)
-            //questionArray.add(i);
+        
         Iterator<MovieSet> iter = setRepository.findAll().iterator();
         while (iter.hasNext()) {
             MovieSet set = iter.next();
@@ -109,7 +107,7 @@ public class HomeController {
             return new Message(0, "Duplicate","Username not available");
         return new Message(100, "Congratulations!", "You have signed up. msg:"+message.toString());
 
-        //return "msg:"+message;
+        
     }
 
     @RequestMapping(value = "play", method = RequestMethod.GET, produces = "application/json")
@@ -117,13 +115,13 @@ public class HomeController {
         int questionIndex = (Integer)session.getAttribute("questionIndex");
         ArrayList<Long> questionArray = (ArrayList<Long>)session.getAttribute("questionArray");
         logger.info("Accessing protected play resource sid:"+session.getId()+" count:"+questionIndex);
-        //return new Message(100, "Congratulations!", "Launching play.");
+        
         MovieSet set = setRepository.findById(questionArray.get(questionIndex));
         questionIndex = (questionIndex+1)%(questionArray.size());
         session.setAttribute("questionIndex",questionIndex);
 
 
-        //logger.info("Set:"+set.getMovie1());
+        
         return set;
     }
 
@@ -138,10 +136,10 @@ public class HomeController {
         userRepository.save(user);
         return new Message(100, "Congratulations!", "Highscore updated");
 
-        //return "msg:"+message;
+        
     }
 
-    @RequestMapping(value = "addset", method = RequestMethod.POST/*, consumes = "application/json"*/)
+    @RequestMapping(value = "addset", method = RequestMethod.POST)
     @Secured("ROLE_ADMIN")
     public @ResponseBody Message addSet(@RequestBody MovieSet movieSet) {
         logger.info("received set:"+movieSet.getMovie1()+" "+movieSet.getMovie2()+" "+movieSet.getMovie3()+" "+movieSet.getMovie4()+" "+movieSet.getAnswer());

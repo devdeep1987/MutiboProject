@@ -30,29 +30,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         logger.info("username:"+name);
-        /*Map<String, Object> userMap = userService.getUserByUsername(name);
-
-        //check if this user with this username exist, if not, throw an exception
-        // and stop the login process
-        if (userMap == null) {
-            throw new UsernameNotFoundException("User details not found with this username: " + name);
-        }
-
-        String username = (String) userMap.get("username");
-        String password = (String) userMap.get("password");
-        String role = (String) userMap.get("role");*/
-
-
-        //List authList = getAuthorities(role);
+        
         User u = repository.findByUsername(name);
         if (u == null)
             throw new UsernameNotFoundException("User details not found with this username: " + name);
         String username = u.getUsername();
         String password = u.getPassword();
-        /*List authList = new ArrayList();
-        authList.add(new SimpleGrantedAuthority("USER"));
-        if (u.getRole().equals("admin"))
-            authList.add(new SimpleGrantedAuthority("ADMIN"));*/
+        
 
         List<GrantedAuthority> authList = AuthorityUtils
                 .commaSeparatedStringToAuthorityList("ROLE_USER");
@@ -60,8 +44,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             authList = AuthorityUtils
                     .commaSeparatedStringToAuthorityList("ROLE_ADMIN");
 
-        //get the encoded password
-        //String encodedPassword = passwordEncoder.encode(password);
+        
 
         org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(username, password, authList);
 

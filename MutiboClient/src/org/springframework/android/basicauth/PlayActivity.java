@@ -40,7 +40,7 @@ public class PlayActivity extends Activity {
 
     private boolean destroyed = false;
     protected static final String TAG = PlayActivity.class.getSimpleName();
-    //private MovieSet movieSet;
+    
     private ArrayList<String> movieArray;
     private TextView welcomeText;
     public static TextView highScoreText;
@@ -60,17 +60,16 @@ public class PlayActivity extends Activity {
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new FetchSecuredResourceTask().execute();
-                //displayResponse(new Message(0,"Play","Beginning play!"));
+                
             }
         });
 
         final Button addSetButton = (Button) findViewById(R.id.addsetbutton);
-        //if (!MainActivity.currentRole.equals("admin"))
-            //addSetButton.setVisibility(View.INVISIBLE);
+        
 
         addSetButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //new TestAdminTask().execute();
+                
                 Intent addset = new Intent(PlayActivity.this, AddSetActivity.class);
                 startActivity(addset);
             }
@@ -81,32 +80,7 @@ public class PlayActivity extends Activity {
         Toast.makeText(this, response.getText(), Toast.LENGTH_LONG).show();
     }
 
-    /*private class TestAdminTask extends AsyncTask<Void, Void, Message> {
-        @Override
-        protected Message doInBackground(Void... voids) {
-            final String url = "http://10.0.2.2:8080/addset";
-            DefaultHttpClient httpclient = new DefaultHttpClient();
-            //HttpGet request = new HttpGet(url);
-            HttpPost request = new HttpPost(url);
-
-
-            try {
-                StringEntity params = new StringEntity("{\"movie1\":\"My Left Foot\",\"movie2\":\"Lincoln\",\"movie3\":\"There Will Be Blood\",\"movie4\":\"Gangs of New York\",\"answer\":\"Gangs of New York\"}");
-                params.setContentType("application/json");
-                request.setEntity(params);
-                HttpResponse response = httpclient.execute(request, MainActivity.staticHttpContext);
-                return new Message(0,"AddSet",response.getStatusLine().toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-                return new Message(0, e.getMessage(), e.getLocalizedMessage());
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Message result) {
-            displayResponse(result);
-        }
-    }*/
+    
 
     private class FetchSecuredResourceTask extends AsyncTask<Void, Void, Message> {
 
@@ -119,23 +93,12 @@ public class PlayActivity extends Activity {
         protected Message doInBackground(Void... voids) {
             final String url = "http://10.0.2.2:8080/play";
 
-            // Populate the HTTP Basic Authentitcation header with the username and password
-           // HttpAuthentication authHeader = new HttpBasicAuthentication("xx", "yy");
-            //HttpHeaders requestHeaders = new HttpHeaders();
-            //requestHeaders.setAuthorization(authHeader);
-            //requestHeaders.set("Cookie","JSESSIONID="+MainActivity.sid);
-            //requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-            // Create a new RestTemplate instance
-            //RestTemplate restTemplate = new RestTemplate();
-            //restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+            
 
             try {
                 // Make the network request
                 Log.d(TAG, url);
-                //ResponseEntity<Message> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Message.class);
-                //if(response.getBody().getId() == 100)
-                    //login_success = true;
+                
                 DefaultHttpClient httpclient = new DefaultHttpClient();
                 HttpGet request = new HttpGet(url);
 
@@ -156,9 +119,7 @@ public class PlayActivity extends Activity {
                         count++;
                     }
                 }
-                //movieSet = new MovieSet(set[0], set[1], set[2], set[3], set[4]);
-
-                //return response.getBody();
+                
                 return new Message(0,"Play",response.getStatusLine().toString());
             } catch (HttpClientErrorException e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);

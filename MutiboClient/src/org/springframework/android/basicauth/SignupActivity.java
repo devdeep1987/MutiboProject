@@ -41,7 +41,7 @@ public class SignupActivity extends AbstractAsyncActivity {
 		final Button registerButton = (Button) findViewById(R.id.register);
 		signupmsg=new Message(0,"","");
         signup_success = false;
-		//signupmsg="";
+		
 		registerButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				
@@ -58,8 +58,7 @@ public class SignupActivity extends AbstractAsyncActivity {
 				else if (username.indexOf(" ")!=-1) 
 					displayMessage("Username cannot contain spaces");
 				else {
-					//displayMessage("Ready to signup");
-					//signupmsg=username+" "+password;
+					
                     signupmsg.setSubject(username);
 					signupmsg.setText(password);
 					new FetchSecuredResourceTask().execute();
@@ -81,7 +80,7 @@ public class SignupActivity extends AbstractAsyncActivity {
 
 		@Override
 		protected void onPreExecute() {
-			//showLoadingProgressDialog();
+			
 			
 		}
 		
@@ -90,10 +89,9 @@ public class SignupActivity extends AbstractAsyncActivity {
 			// TODO Auto-generated method stub
 			final String url = "http://10.0.2.2:8080/signup";
 
-            //HttpAuthentication authHeader = new HttpBasicAuthentication("roy", "spring");
+            
 			HttpHeaders requestHeaders = new HttpHeaders();
-            //requestHeaders.setAuthorization(authHeader);
-			//requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            
 			requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 
 			HttpEntity<Message> requestEntity = new HttpEntity<Message>(signupmsg, requestHeaders);
@@ -102,18 +100,18 @@ public class SignupActivity extends AbstractAsyncActivity {
 			RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 			restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-			//restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+			
 
 			try {
 				// Make the network request
 				Log.d(TAG, url);
 				ResponseEntity<Message> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Message.class);
-				//String response = restTemplate.postForObject(url, signupmsg, String.class);
+				
                 Log.d(TAG,response.getStatusCode().toString());
                 if(response.getBody().getId() == 100)
                     signup_success = true;
 				return response.getBody();
-				//return new Message(0,"",response);
+				
 			} catch (HttpClientErrorException e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
 				return new Message(0, e.getStatusText(), e.getLocalizedMessage());
@@ -125,7 +123,7 @@ public class SignupActivity extends AbstractAsyncActivity {
 		
 		@Override
 		protected void onPostExecute(Message result) {
-			//dismissProgressDialog();
+			
 			displayMessage(result.getText());
             if(signup_success)
                 finish();

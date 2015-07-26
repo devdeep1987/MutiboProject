@@ -137,10 +137,7 @@ public class GameActivity extends Activity {
             try {
                 DefaultHttpClient httpclient = new DefaultHttpClient();
                 HttpPost request = new HttpPost(url);
-                /*List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-                nameValuePairs.add(new BasicNameValuePair("username", MainActivity.currentUsername));
-
-                request.setEntity(new UrlEncodedFormEntity(nameValuePairs));*/
+                
                 StringEntity params = new StringEntity("{\"id\":100,\"subject\":\""+MainActivity.currentUsername+"\",\"text\":\""+MainActivity.currentHighscore+"\"}");
                 params.setContentType("application/json");
                 request.setEntity(params);
@@ -194,9 +191,7 @@ public class GameActivity extends Activity {
                         count++;
                     }
                 }
-                //movieSet = new MovieSet(set[0], set[1], set[2], set[3], set[4]);
-
-                //return response.getBody();
+                
                 return new Message(0,"Play",response.getStatusLine().toString());
             } catch (HttpClientErrorException e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);

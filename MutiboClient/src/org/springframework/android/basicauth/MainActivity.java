@@ -89,7 +89,7 @@ public class MainActivity extends AbstractAsyncActivity {
 		});
 		signupButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				//Toast.makeText(getApplicationContext(), "Sign up!", Toast.LENGTH_LONG).show();
+				
 				Intent signup = new Intent(MainActivity.this, SignupActivity.class);
 				startActivity(signup);
 			}
@@ -114,7 +114,7 @@ public class MainActivity extends AbstractAsyncActivity {
 
 		@Override
 		protected void onPreExecute() {
-			//showLoadingProgressDialog();
+			
 
 			// build the message object
 			EditText editText = (EditText) findViewById(R.id.username);
@@ -126,31 +126,15 @@ public class MainActivity extends AbstractAsyncActivity {
 
 		@Override
 		protected Message doInBackground(Void... params) {
-			//final String url = getString(R.string.base_uri) + "/getmessage";
+			
 			final String url = "http://10.0.2.2:8080/login";
 
-			// Populate the HTTP Basic Authentitcation header with the username and password
-			//HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-			//HttpHeaders requestHeaders = new HttpHeaders();
-			//requestHeaders.setAuthorization(authHeader);
-			//requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-			// Create a new RestTemplate instance
-			//RestTemplate restTemplate = new RestTemplate();
-			//restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+			
 
 
 			try {				// Make the network request
 				Log.d(TAG, url);
-                //Log.d(TAG,requestHeaders.toString());
-                //Log.d(TAG,authHeader.toString());
-
-				/*ResponseEntity<Message> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Message.class);
-                String sidparameter = response.getHeaders().toSingleValueMap().values().toArray()[1].toString();
-                String sidstr = sidparameter.substring(sidparameter.indexOf('=')+1,sidparameter.indexOf(';'));
-
-                Log.d(TAG,sidstr);
-                sid=sidstr;*/
+                
 
                 DefaultHttpClient httpclient = new DefaultHttpClient();
                 Credentials defaultcreds = new UsernamePasswordCredentials(username, password);
@@ -164,7 +148,7 @@ public class MainActivity extends AbstractAsyncActivity {
                 Log.d(TAG,response.getStatusLine().toString());
                 Log.d(TAG,localContext.toString());
 
-                //if(response.getBody().getId() == 100)
+                
                 login_success = false;
                 if(response.getStatusLine().getStatusCode()==200)
                     login_success = true;
@@ -207,7 +191,7 @@ public class MainActivity extends AbstractAsyncActivity {
 
 		@Override
 		protected void onPostExecute(Message result) {
-			//dismissProgressDialog();
+			
 			displayResponse(result);
             if(login_success) {
                 Intent play = new Intent(MainActivity.this, PlayActivity.class);

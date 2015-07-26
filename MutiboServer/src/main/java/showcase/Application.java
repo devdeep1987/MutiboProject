@@ -39,62 +39,14 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-/**
- * @author Roy Clarkson
- */
-//@Import(DatabaseConfig.class)
 
-//@EnableJpaRepositories(basePackageClasses = AppUserRepository.class)
-/*@EnableJpaRepositories(basePackages = {
-        "showcase"
-})*/
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
-//@EnableGlobalMethodSecurity(securedEnabled = true)
 public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-
-
-    /*@Bean
-    public ApplicationSecurity applicationSecurity() {
-        return new ApplicationSecurity();
-    }*/
-
-    /*@Order(Ordered.HIGHEST_PRECEDENCE)
-    @Configuration
-    protected static class AuthenticationSecurity extends
-            GlobalAuthenticationConfigurerAdapter {
-
-        @Autowired
-        private CustomUserDetailsService users;
-
-        @Override
-        public void init(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(users);
-        }
-    }
-
-    //@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-    protected static class ApplicationSecurity extends WebSecurityConfigurerAdapter {
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            // @formatter:off
-            http
-                    .csrf().disable()
-                    .authorizeRequests()
-                    .antMatchers("/signup","/about").permitAll()
-                    .anyRequest().authenticated()
-                    .and()
-                    .httpBasic().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
-            //http.sessionManagement().sessionAuthenticationStrategy().
-            // @formatter:on
-        }
-
-    }*/
 
 }
