@@ -15,6 +15,8 @@ public class User {
 
     private String username;
     private String password;
+    private String role;
+    private long score;
 
     public String getUsername() {
         return username;
@@ -31,4 +33,22 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public  void setRole(String role) {
+        this.role = role;
+    }
+
+    public long getScore() {
+        return score;
+    }
+
+    public  void setScore(long score) {
+        this.score = score;
+    }
+
+
 }

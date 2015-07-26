@@ -26,6 +26,7 @@
         <activity android:name="org.springframework.android.basicauth.SignupActivity" />
         <activity android:name="org.springframework.android.basicauth.PlayActivity" />
         <activity android:name="org.springframework.android.basicauth.GameActivity" />
+        <activity android:name="org.springframework.android.basicauth.AddSetActivity" />
     </application>
 
 </manifest>

@@ -35,6 +35,7 @@ import org.springframework.security.config.annotation.authentication.configurers
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -50,7 +51,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
-@EnableGlobalMethodSecurity(securedEnabled = true)
+//@EnableGlobalMethodSecurity(securedEnabled = true)
 public class Application {
 
 	public static void main(String[] args) {
@@ -58,13 +59,12 @@ public class Application {
 	}
 
 
-
-    @Bean
+    /*@Bean
     public ApplicationSecurity applicationSecurity() {
         return new ApplicationSecurity();
-    }
+    }*/
 
-    @Order(Ordered.HIGHEST_PRECEDENCE)
+    /*@Order(Ordered.HIGHEST_PRECEDENCE)
     @Configuration
     protected static class AuthenticationSecurity extends
             GlobalAuthenticationConfigurerAdapter {
@@ -95,6 +95,6 @@ public class Application {
             // @formatter:on
         }
 
-    }
+    }*/
 
 }

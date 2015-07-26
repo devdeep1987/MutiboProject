@@ -19,12 +19,22 @@ package showcase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.token.Token;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -33,8 +43,10 @@ import javax.servlet.http.HttpSession;
  * 
  * @author Roy Clarkson
  */
-@Controller
-@RequestMapping("/*")
+//@Controller
+@RestController
+//@EnableGlobalMethodSecurity(securedEnabled = true)
+//@RequestMapping("/*")
 public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -44,6 +56,11 @@ public class HomeController {
 
     @Autowired
     private MovieSetRepository setRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    private static String SEC_CONTEXT_ATTR = HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -57,8 +74,24 @@ public class HomeController {
     @RequestMapping(value = "login", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody Message login(HttpSession session) {
         logger.info("Accessing protected resource sid:"+session.getId());
-        //Token token = session.getAttribute()
-        return new Message(100, "Congratulations!", "You have logged in.");
+        ArrayList<Long> questionArray = new ArrayList<Long>();
+        //for (long i=1;i<=setRepository.count();i++)
+            //questionArray.add(i);
+        Iterator<MovieSet> iter = setRepository.findAll().iterator();
+        while (iter.hasNext()) {
+            MovieSet set = iter.next();
+            questionArray.add(set.getId().longValue());
+        }
+        Collections.shuffle(questionArray);
+        int questionIndex = 0;
+        session.setAttribute("questionIndex",questionIndex);
+        session.setAttribute("questionArray",questionArray);
+        SecurityContext securityContext = (SecurityContext) session.getAttribute(SEC_CONTEXT_ATTR);
+        logger.info("User:"+securityContext.getAuthentication().getName());
+        User currentUser = userRepository.findByUsername(securityContext.getAuthentication().getName());
+        long highscore = currentUser.getScore();
+        String role = currentUser.getRole();
+        return new Message(100, role, new Long(highscore).toString());
     }
 
     @RequestMapping(value = "signup", method = RequestMethod.GET, produces = "application/json")
@@ -81,11 +114,47 @@ public class HomeController {
 
     @RequestMapping(value = "play", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody MovieSet play(HttpSession session) {
-        logger.info("Accessing protected play resource sid:"+session.getId());
+        int questionIndex = (Integer)session.getAttribute("questionIndex");
+        ArrayList<Long> questionArray = (ArrayList<Long>)session.getAttribute("questionArray");
+        logger.info("Accessing protected play resource sid:"+session.getId()+" count:"+questionIndex);
         //return new Message(100, "Congratulations!", "Launching play.");
-        MovieSet set = setRepository.findById((long) 1);
-        logger.info("Set:"+set.getMovie1());
+        MovieSet set = setRepository.findById(questionArray.get(questionIndex));
+        questionIndex = (questionIndex+1)%(questionArray.size());
+        session.setAttribute("questionIndex",questionIndex);
+
+
+        //logger.info("Set:"+set.getMovie1());
         return set;
+    }
+
+    @RequestMapping(value = "updatehighscore", method = RequestMethod.POST, consumes = "application/json")
+    public @ResponseBody Message updateHighScore(@RequestBody Message message, HttpSession session) {
+        logger.info("Accessing protected resource sid:"+session.getId());
+
+        logger.info("accessed user:"+/*user.getUsername()*/message.getSubject());
+        long highscore = Long.parseLong(message.getText());
+        User user = userRepository.findByUsername(message.getSubject());
+        user.setScore(highscore);
+        userRepository.save(user);
+        return new Message(100, "Congratulations!", "Highscore updated");
+
+        //return "msg:"+message;
+    }
+
+    @RequestMapping(value = "addset", method = RequestMethod.POST/*, consumes = "application/json"*/)
+    @Secured("ROLE_ADMIN")
+    public @ResponseBody Message addSet(@RequestBody MovieSet movieSet) {
+        logger.info("received set:"+movieSet.getMovie1()+" "+movieSet.getMovie2()+" "+movieSet.getMovie3()+" "+movieSet.getMovie4()+" "+movieSet.getAnswer());
+        Iterator<MovieSet> iter = setRepository.findAll().iterator();
+        while (iter.hasNext()) {
+            MovieSet set = iter.next();
+            if(set.getMovie1().equals(movieSet.getMovie1()) && set.getMovie2().equals(movieSet.getMovie2()) && set.getMovie3().equals(movieSet.getMovie3()) && set.getMovie4().equals(movieSet.getMovie4()) && set.getAnswer().equals(movieSet.getAnswer())) {
+                logger.info("Duplicate set");
+                return new Message(100, "Duplicate!", "Set not added");
+            }
+        }
+        setRepository.save(movieSet);
+        return new Message(100, "Congratulations!", "Set added");
     }
 
 

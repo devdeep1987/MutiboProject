@@ -2,6 +2,8 @@ package showcase;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -47,8 +49,16 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User details not found with this username: " + name);
         String username = u.getUsername();
         String password = u.getPassword();
-        List authList = new ArrayList();
+        /*List authList = new ArrayList();
         authList.add(new SimpleGrantedAuthority("USER"));
+        if (u.getRole().equals("admin"))
+            authList.add(new SimpleGrantedAuthority("ADMIN"));*/
+
+        List<GrantedAuthority> authList = AuthorityUtils
+                .commaSeparatedStringToAuthorityList("ROLE_USER");
+        if (u.getRole().equals("admin"))
+            authList = AuthorityUtils
+                    .commaSeparatedStringToAuthorityList("ROLE_ADMIN");
 
         //get the encoded password
         //String encodedPassword = passwordEncoder.encode(password);
@@ -65,6 +75,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         User u = new User();
         u.setUsername(username);
         u.setPassword(password);
+        u.setRole("user");
+        u.setScore(0);
 
         repository.save(u);
         return true;

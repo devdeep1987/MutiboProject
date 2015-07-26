@@ -16,7 +16,9 @@
 
 package org.springframework.android.basicauth;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -63,6 +65,9 @@ public class MainActivity extends AbstractAsyncActivity {
     private boolean login_success;
     public static String sid;
     public static HttpContext staticHttpContext;
+    public static String currentUsername;
+    public static String currentHighscore;
+    public static String currentRole;
 
 	// ***************************************
 	// Activity methods
@@ -163,7 +168,25 @@ public class MainActivity extends AbstractAsyncActivity {
                 login_success = false;
                 if(response.getStatusLine().getStatusCode()==200)
                     login_success = true;
-				//return response.getBody();
+
+                if (login_success) {
+                    MainActivity.currentUsername = username;
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+                    int count = 0;
+                    for (String line = null; (line = reader.readLine()) != null;) {
+                        Log.d(TAG, "Line:" + line + " length:" + line.length());
+                        if (count == 2) {
+                            MainActivity.currentRole = line.substring(line.indexOf(":")+3,line.length()-2);
+                            Log.d(TAG,"role:"+MainActivity.currentRole);
+                        }
+                        else if (count == 3) {
+                            MainActivity.currentHighscore = line.substring(line.indexOf(':')+3,line.length()-1);
+                            Log.d(TAG,"score:"+MainActivity.currentHighscore);
+                        }
+                        count++;
+                    }
+                }
+
                 return new Message(0,"Login",response.getStatusLine().toString());
 			} catch (HttpClientErrorException e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

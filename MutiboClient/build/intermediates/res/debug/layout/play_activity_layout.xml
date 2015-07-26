@@ -12,4 +12,31 @@
         android:text="Play!"
         android:id="@+id/playbutton"
         android:layout_weight="0.05" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Welcome"
+        android:id="@+id/welcometext"
+        android:layout_weight="0.05"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Your high score is"
+        android:id="@+id/highscoretext"
+        android:layout_weight="0.05"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Set"
+        android:id="@+id/addsetbutton"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.05" />
+
 </LinearLayout><!-- From: file:/C:/Users/Devdeep/AndroidStudioProjects/MutiboClient/res/layout/play_activity_layout.xml -->

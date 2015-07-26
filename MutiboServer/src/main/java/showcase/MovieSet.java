@@ -25,6 +25,9 @@ public class MovieSet {
         movie4 = m4;
         answer = ans;
     }
+    public Long getId() {
+        return  id;
+    }
     public String getMovie1() {
         return movie1;
     }

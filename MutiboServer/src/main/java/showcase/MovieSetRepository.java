@@ -7,5 +7,4 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface MovieSetRepository extends CrudRepository<MovieSet, Long> {
     MovieSet findById(Long id);
-    MovieSet findByMovie4(String movie4);
 }

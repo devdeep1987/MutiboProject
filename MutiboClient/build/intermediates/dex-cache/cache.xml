@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Devdeep\.gradle\caches\modules-2\files-2.1\org.springframework.android\spring-android-core\1.0.1.RELEASE\e68f0e8e4b636ee30c4de58953be38d9b72a5e3b\spring-android-core-1.0.1.RELEASE.jar"
+        jar="C:\Users\Devdeep\.gradle\caches\modules-2\files-2.1\org.springframework.android\spring-android-rest-template\1.0.1.RELEASE\e132d929bd181941f79b0d63edafb8a86ae6fd33\spring-android-rest-template-1.0.1.RELEASE.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="e68f0e8e4b636ee30c4de58953be38d9b72a5e3b">
-        <dex dex="C:\Users\Devdeep\AndroidStudioProjects\MutiboClient\build\intermediates\pre-dexed\debug\spring-android-core-1.0.1.RELEASE-369583f42a9bead20c2aae92dc0ffb54cf78c4a7.jar" />
+        sha1="e132d929bd181941f79b0d63edafb8a86ae6fd33">
+        <dex dex="C:\Users\Devdeep\AndroidStudioProjects\MutiboClient\build\intermediates\pre-dexed\debug\spring-android-rest-template-1.0.1.RELEASE-2e0962653fb299a8093794d344c189627b4de250.jar" />
     </item>
     <item
         jar="C:\Users\Devdeep\.gradle\caches\modules-2\files-2.1\org.codehaus.jackson\jackson-mapper-asl\1.9.11\45d70862fa016993193075a1e8e32a01dcf438e8\jackson-mapper-asl-1.9.11.jar"
@@ -16,18 +16,18 @@
         <dex dex="C:\Users\Devdeep\AndroidStudioProjects\MutiboClient\build\intermediates\pre-dexed\debug\jackson-mapper-asl-1.9.11-263c1585096eeec9c70c22a9861ab74c8d229df4.jar" />
     </item>
     <item
-        jar="C:\Users\Devdeep\.gradle\caches\modules-2\files-2.1\org.springframework.android\spring-android-rest-template\1.0.1.RELEASE\e132d929bd181941f79b0d63edafb8a86ae6fd33\spring-android-rest-template-1.0.1.RELEASE.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="e132d929bd181941f79b0d63edafb8a86ae6fd33">
-        <dex dex="C:\Users\Devdeep\AndroidStudioProjects\MutiboClient\build\intermediates\pre-dexed\debug\spring-android-rest-template-1.0.1.RELEASE-2e0962653fb299a8093794d344c189627b4de250.jar" />
-    </item>
-    <item
         jar="C:\Users\Devdeep\.gradle\caches\modules-2\files-2.1\org.codehaus.jackson\jackson-core-asl\1.9.11\e32303ef8bd18a5c9272780d49b81c95e05ddf43\jackson-core-asl-1.9.11.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="e32303ef8bd18a5c9272780d49b81c95e05ddf43">
         <dex dex="C:\Users\Devdeep\AndroidStudioProjects\MutiboClient\build\intermediates\pre-dexed\debug\jackson-core-asl-1.9.11-aaaf52c4ba52813372b891ddca947ab80d5fdd53.jar" />
+    </item>
+    <item
+        jar="C:\Users\Devdeep\.gradle\caches\modules-2\files-2.1\org.springframework.android\spring-android-core\1.0.1.RELEASE\e68f0e8e4b636ee30c4de58953be38d9b72a5e3b\spring-android-core-1.0.1.RELEASE.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="e68f0e8e4b636ee30c4de58953be38d9b72a5e3b">
+        <dex dex="C:\Users\Devdeep\AndroidStudioProjects\MutiboClient\build\intermediates\pre-dexed\debug\spring-android-core-1.0.1.RELEASE-369583f42a9bead20c2aae92dc0ffb54cf78c4a7.jar" />
     </item>
 
 </items>

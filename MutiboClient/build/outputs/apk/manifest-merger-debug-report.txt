@@ -57,3 +57,7 @@ activity#org.springframework.android.basicauth.GameActivity
 ADDED from AndroidManifest.xml:28:9
 	android:name
 		ADDED from AndroidManifest.xml:28:19
+activity#org.springframework.android.basicauth.AddSetActivity
+ADDED from AndroidManifest.xml:29:9
+	android:name
+		ADDED from AndroidManifest.xml:29:19

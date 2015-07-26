@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
@@ -37,13 +40,21 @@ public class PlayActivity extends Activity {
 
     private boolean destroyed = false;
     protected static final String TAG = PlayActivity.class.getSimpleName();
-    private MovieSet movieSet;
+    //private MovieSet movieSet;
     private ArrayList<String> movieArray;
+    private TextView welcomeText;
+    public static TextView highScoreText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.play_activity_layout);
+
+        welcomeText = (TextView) findViewById(R.id.welcometext);
+        welcomeText.setText("Welcome, "+MainActivity.currentUsername);
+        highScoreText = (TextView) findViewById(R.id.highscoretext);
+        highScoreText.setText("Your high score is "+MainActivity.currentHighscore);
+
 
         final Button playButton = (Button) findViewById(R.id.playbutton);
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -52,11 +63,50 @@ public class PlayActivity extends Activity {
                 //displayResponse(new Message(0,"Play","Beginning play!"));
             }
         });
+
+        final Button addSetButton = (Button) findViewById(R.id.addsetbutton);
+        //if (!MainActivity.currentRole.equals("admin"))
+            //addSetButton.setVisibility(View.INVISIBLE);
+
+        addSetButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //new TestAdminTask().execute();
+                Intent addset = new Intent(PlayActivity.this, AddSetActivity.class);
+                startActivity(addset);
+            }
+        });
     }
 
     private void displayResponse(Message response) {
         Toast.makeText(this, response.getText(), Toast.LENGTH_LONG).show();
     }
+
+    /*private class TestAdminTask extends AsyncTask<Void, Void, Message> {
+        @Override
+        protected Message doInBackground(Void... voids) {
+            final String url = "http://10.0.2.2:8080/addset";
+            DefaultHttpClient httpclient = new DefaultHttpClient();
+            //HttpGet request = new HttpGet(url);
+            HttpPost request = new HttpPost(url);
+
+
+            try {
+                StringEntity params = new StringEntity("{\"movie1\":\"My Left Foot\",\"movie2\":\"Lincoln\",\"movie3\":\"There Will Be Blood\",\"movie4\":\"Gangs of New York\",\"answer\":\"Gangs of New York\"}");
+                params.setContentType("application/json");
+                request.setEntity(params);
+                HttpResponse response = httpclient.execute(request, MainActivity.staticHttpContext);
+                return new Message(0,"AddSet",response.getStatusLine().toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return new Message(0, e.getMessage(), e.getLocalizedMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Message result) {
+            displayResponse(result);
+        }
+    }*/
 
     private class FetchSecuredResourceTask extends AsyncTask<Void, Void, Message> {
 
@@ -106,7 +156,7 @@ public class PlayActivity extends Activity {
                         count++;
                     }
                 }
-                movieSet = new MovieSet(set[0], set[1], set[2], set[3], set[4]);
+                //movieSet = new MovieSet(set[0], set[1], set[2], set[3], set[4]);
 
                 //return response.getBody();
                 return new Message(0,"Play",response.getStatusLine().toString());
